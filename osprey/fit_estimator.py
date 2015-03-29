@@ -7,7 +7,6 @@ import numpy as np
 import sklearn
 from sklearn.base import is_classifier, clone
 from sklearn.metrics.scorer import check_scoring
-from sklearn.utils.validation import check_arrays
 from sklearn.externals.joblib import Parallel, delayed
 from sklearn.cross_validation import _check_cv as check_cv, _safe_split, _score
 
@@ -42,8 +41,6 @@ def fit_and_score_estimator(estimator, parameters, cv, X, y=None, scoring=None,
     """
     scorer = check_scoring(estimator, scoring=scoring)
     n_samples = _num_samples(X)
-    X, y = check_arrays(X, y, allow_lists=True, sparse_format='csr',
-                        allow_nans=True)
     if y is not None:
         if len(y) != n_samples:
             raise ValueError('Target variable (y) has a different number '

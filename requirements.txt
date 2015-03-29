@@ -6,3 +6,4 @@ numpy
 scipy
 scikit-learn
 sqlalchemy
+bokeh==0.6.1

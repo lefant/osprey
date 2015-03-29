@@ -18,7 +18,7 @@ if LooseVersion(sklearn.__version__) < LooseVersion('0.15.0'):
 
 
 def fit_and_score_estimator(estimator, parameters, cv, X, y=None, scoring=None,
-                            iid=True, n_jobs=-1, verbose=1,
+                            iid=True, n_jobs=1, verbose=1,
                             pre_dispatch='2*n_jobs'):
     """Fit and score an estimator with cross-validation
 

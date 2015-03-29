@@ -50,6 +50,7 @@ FIELDS = {
     'strategy':        ['name', 'params'],
     'cv':              (int, dict),
     'scoring':         (str, type(None)),
+    'n_jobs':          int,
 }
 
 
@@ -298,6 +299,11 @@ class Config(object):
         scoring = self.get_section('scoring')
         assert isinstance(scoring, (str, type(None)))
         return scoring
+
+    def n_jobs(self):
+        n_jobs = self.config.get('n_jobs', 1)
+        assert isinstance(n_jobs, int)
+        return n_jobs
 
     def cv(self, X, y=None):
         cv = self.get_section('cv')

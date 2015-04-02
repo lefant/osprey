@@ -18,7 +18,7 @@ if LooseVersion(sklearn.__version__) < LooseVersion('0.15.0'):
 
 
 def fit_and_score_estimator(estimator, parameters, cv, X, y=None, scoring=None,
-                            iid=True, n_jobs=1, verbose=1,
+                            iid=True, n_jobs=1, fit_params=None, verbose=1,
                             pre_dispatch='2*n_jobs'):
     """Fit and score an estimator with cross-validation
 
@@ -53,7 +53,7 @@ def fit_and_score_estimator(estimator, parameters, cv, X, y=None, scoring=None,
     )(
         delayed(_fit_and_score)(clone(estimator), X, y, scorer,
                                 train, test, verbose, parameters,
-                                fit_params=None)
+                                fit_params=fit_params)
         for train, test in cv)
 
     assert len(out) == len(cv)

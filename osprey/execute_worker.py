@@ -35,6 +35,7 @@ def execute(args, parser):
     config_sha1 = config.sha1()
     scoring = config.scoring()
     n_jobs = config.n_jobs()
+    fit_params = config.fit_params()
 
     if is_msmbuilder_estimator(estimator):
         print_msmbuilder_version()
@@ -70,7 +71,7 @@ def execute(args, parser):
 
         s = run_single_trial(
             estimator=estimator, params=params, trial_id=trial_id,
-            scoring=scoring, X=X, y=y, cv=cv, n_jobs=n_jobs,
+            scoring=scoring, X=X, y=y, cv=cv, n_jobs=n_jobs, fit_params=fit_params,
             sessionbuilder=config.trialscontext)
 
         statuses[i] = s
@@ -112,14 +113,22 @@ def initialize_trial(strategy, searchspace, estimator, config_sha1,
     return trial_id, params
 
 
-def run_single_trial(estimator, params, trial_id, scoring, X, y, cv, n_jobs,
+def run_single_trial(estimator, params, trial_id, scoring, X, y, cv, n_jobs, fit_params,
                      sessionbuilder):
 
     status = None
 
     try:
         score = fit_and_score_estimator(
-            estimator, params, cv=cv, n_jobs=n_jobs, scoring=scoring, X=X, y=y, verbose=1)
+            estimator,
+            params,
+            cv=cv,
+            n_jobs=n_jobs,
+            fit_params=fit_params,
+            scoring=scoring,
+            X=X,
+            y=y,
+            verbose=1)
         with sessionbuilder() as session:
             trial = session.query(Trial).get(trial_id)
             trial.mean_test_score = score['mean_test_score']

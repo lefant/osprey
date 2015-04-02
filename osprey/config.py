@@ -42,8 +42,7 @@ from . import eval_scopes
 
 
 FIELDS = {
-    'estimator':       ['pickle', 'eval', 'eval_scope', 'entry_point',
-                        'params'],
+    'estimator':       ['pickle', 'eval', 'eval_scope', 'entry_point', 'params', 'fit_params_entry_point'],
     'dataset_loader':  ['name', 'params'],
     'trials':          ['uri', 'project_name'],
     'search_space':    dict,
@@ -212,6 +211,12 @@ class Config(object):
                 return estimator
 
         raise RuntimeError('no estimator field')
+
+    def fit_params(self):
+        entry_point = self.get_value('estimator/fit_params_entry_point')
+        if entry_point is not None:
+            fit_params = load_entry_point(entry_point, 'fit_params/entry_point')
+            return fit_params
 
     def search_space(self):
         ss = self.get_section('search_space')

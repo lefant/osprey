@@ -49,7 +49,7 @@ FIELDS = {
     'strategy':        ['name', 'params'],
     'cv':              (int, dict),
     'scoring':         (str, type(None)),
-    'n_jobs':          int,
+    'n_jobs':          (int, type(None)),
 }
 
 

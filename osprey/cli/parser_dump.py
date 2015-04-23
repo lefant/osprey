@@ -13,6 +13,6 @@ def configure_parser(sub_parsers):
     p = sub_parsers.add_parser('dump', description=help, help=help,
                                formatter_class=ArgumentDefaultsHelpFormatter)
     p.add_argument('config', help='Path to worker config file (yaml)')
-    p.add_argument('-o', '--output', choices=['csv', 'json'], default='json',
+    p.add_argument('-o', '--output', choices=['csv', 'json', 'best'], default='json',
                    help='output format')
     p.set_defaults(func=func)
